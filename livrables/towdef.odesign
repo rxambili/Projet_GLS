@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="towdef" version="12.0.0.2017041100">
+  <ownedViewpoints name="TowdefViewpoint" modelFileExtension="towdef">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="PartieDiagram" domainClass="towdef::Partie" enablePopupBars="true">
+      <metamodel href="http://www.Towdef.n7#/"/>
+      <defaultLayer name="Default">
+        <nodeMappings name="ProjectileNode" domainClass="towdef::Projectile">
+          <style xsi:type="style:DotDescription" borderSizeComputationExpression="1" showIcon="false" labelExpression="[self.name + '\nportee : ' + self.portee + '\nmasse : ' + self.masse + '\nvitesse : ' + self.vitesse + '\nenergie : ' + self.energie/]" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="NatureTerrainNode" domainClass="towdef::NatureTerrain">
+          <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" showIcon="false" labelExpression="[self.name + '\ntype : ' + self.type/]" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_gray']"/>
+          </style>
+        </nodeMappings>
+        <nodeMappings name="NiveauNode" domainClass="towdef::Niveau">
+          <style xsi:type="style:EllipseNodeDescription" borderSizeComputationExpression="1" showIcon="false" labelExpression="[self.name + '\ndureePauses : ' + self.dureePauses + '\nenergieInitiale : ' + self.energieInitiale + '\nnbMobilesPourPerdre : ' + self.nbMobilesPourPerdre/]" labelPosition="node" resizeKind="NSEW">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='orange']"/>
+          </style>
+        </nodeMappings>
+        <containerMappings name="TerrainJeuContainer" domainClass="towdef::TerrainJeu">
+          <subNodeMappings name="Case" semanticCandidatesExpression="feature:eAllContents" domainClass="towdef::Case">
+            <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" showIcon="false" labelExpression="[self.name + '\n(' + self.noLigne + ', ' + self.noColonne + ')' + '\nenergie : ' + self.energie + '\nvolMax : ' + self.volumeMax/]" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="9" showIcon="false" labelExpression="['Terrain : ' + self.nbLignes + ' x ' + self.nbColonnes/]">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
+          </style>
+        </containerMappings>
+        <containerMappings name="VagueContainer" semanticCandidatesExpression="feature:listeVagues" domainClass="towdef::Vague">
+          <subNodeMappings name="MobileNode" semanticCandidatesExpression="feature:mobilesVague" domainClass="towdef::Mobile">
+            <style xsi:type="style:EllipseNodeDescription" borderSizeComputationExpression="1" showIcon="false" labelExpression="[self.name + '\nvolume : ' + self.volume + '\nenergieMax : ' + self.energieMax + '\nenergieActuelle : ' + self.energieActuelle + '\nenergieTour : ' + self.energieTour + '\ntactique : ' + self.tactique + '\npositionDansVague : ' + self.positionDansVague/]" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
+            </style>
+          </subNodeMappings>
+          <subNodeMappings name="ObstacleNode" semanticCandidatesExpression="feature:obstaclesVague" domainClass="towdef::Obstacle">
+            <style xsi:type="style:LozengeNodeDescription" borderSizeComputationExpression="1" showIcon="false" labelExpression="[self.name + '\nenergieMax : ' + self.energieMax + '\nenergieActuelle : ' + self.energieActuelle + '\nenergieTour : ' + self.energieTour + '\ntactique : ' + self.tactique/]" labelPosition="node" resizeKind="NSEW">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='blue']"/>
+            </style>
+          </subNodeMappings>
+          <style xsi:type="style:FlatContainerStyleDescription" borderSizeComputationExpression="1" labelSize="9" showIcon="false" labelExpression="[self.name + '\nenergieAttribueeSiVictoire : ' + self.energieAttribueeSiVictoire/]">
+            <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <labelFormat>bold</labelFormat>
+            <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+            <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='green']"/>
+            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='blue']"/>
+          </style>
+        </containerMappings>
+        <toolSections name="Element">
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Projectile" nodeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@nodeMappings[name='ProjectileNode']" iconPath="/n7.towerDefense/ressources/icones_sirius/projectile.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="towdef::Projectile" referenceName="listeElements"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="NatureTerrain" nodeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@nodeMappings[name='NatureTerrainNode']" iconPath="/n7.towerDefense/ressources/icones_sirius/natureterrain.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="towdef::NatureTerrain" referenceName="listeElements"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Mobile" nodeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='VagueContainer']/@subNodeMappings[name='MobileNode']" iconPath="/n7.towerDefense/ressources/icones_sirius/mobile.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="towdef::Vague">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="towdef::Mobile" referenceName="mobilesVague"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Obstacle" nodeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='VagueContainer']/@subNodeMappings[name='ObstacleNode']" iconPath="/n7.towerDefense/ressources/icones_sirius/obstacle.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="towdef::Vague">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="towdef::Obstacle" referenceName="obstaclesVague"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Niveau">
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Niveau" nodeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@nodeMappings[name='NiveauNode']" iconPath="/n7.towerDefense/ressources/icones_sirius/niveau.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="towdef::Niveau" referenceName="listeNiveaux"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="TerrainJeu et Case">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="TerrainJeu" containerMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='TerrainJeuContainer']" iconPath="/n7.towerDefense/ressources/icones_sirius/terrain.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="towdef::TerrainJeu" referenceName="terrainDeJeu"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:NodeCreationDescription" name="Case" nodeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='TerrainJeuContainer']/@subNodeMappings[name='Case']" iconPath="/n7.towerDefense/ressources/icones_sirius/case.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container.terrainDeJeu/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="towdef::Case" referenceName="listeCases"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+        <toolSections name="Vague">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="Vague" containerMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='VagueContainer']" iconPath="/n7.towerDefense/ressources/icones_sirius/vague.png">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[container/]">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="towdef::Vague" referenceName="listeVagues"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </defaultLayer>
+      <additionalLayers name="Relations">
+        <edgeMappings name="Mobile&amp;CaseEntree" sourceMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='VagueContainer']/@subNodeMappings[name='MobileNode']" targetMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='TerrainJeuContainer']/@subNodeMappings[name='Case']" targetFinderExpression="feature:caseEntree">
+          <style>
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+            <centerLabelStyleDescription labelSize="7" showIcon="false" labelExpression="entree">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="Mobile&amp;CaseSortie" sourceMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='VagueContainer']/@subNodeMappings[name='MobileNode']" targetMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='TerrainJeuContainer']/@subNodeMappings[name='Case']" targetFinderExpression="feature:caseSortie">
+          <style>
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+            <centerLabelStyleDescription labelSize="7" showIcon="false" labelExpression="sortie">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="Case&amp;NatureTerrain" sourceMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='TerrainJeuContainer']/@subNodeMappings[name='Case']" targetMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@nodeMappings[name='NatureTerrainNode']" targetFinderExpression="feature:natureDeTerrain">
+          <style>
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            <centerLabelStyleDescription labelSize="7" showIcon="false" labelExpression="nature">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="Obstacle&amp;CaseCampement" sourceMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='VagueContainer']/@subNodeMappings[name='ObstacleNode']" targetMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='TerrainJeuContainer']/@subNodeMappings[name='Case']" targetFinderExpression="feature:caseCampement">
+          <style>
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+            <centerLabelStyleDescription labelSize="7" showIcon="false" labelExpression="campement">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_blue']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="Mobile&amp;Projectile" sourceMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='VagueContainer']/@subNodeMappings[name='MobileNode']" targetMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@nodeMappings[name='ProjectileNode']" targetFinderExpression="feature:projectilesLancables">
+          <style>
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            <centerLabelStyleDescription labelSize="7" showIcon="false" labelExpression="lance">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <edgeMappings name="Obstacle&amp;Projectile" sourceMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@containerMappings[name='VagueContainer']/@subNodeMappings[name='ObstacleNode']" targetMapping="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@defaultLayer/@nodeMappings[name='ProjectileNode']" targetFinderExpression="feature:projectilesLancables">
+          <style>
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            <centerLabelStyleDescription labelSize="7" showIcon="false" labelExpression="lance">
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </centerLabelStyleDescription>
+          </style>
+        </edgeMappings>
+        <toolSections name="Relation">
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Mobile&lt;->CaseEntree" edgeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@additionalLayers[name='Relations']/@edgeMappings[name='Mobile%26CaseEntree']" iconPath="/n7.towerDefense/ressources/icones_sirius/mobile&amp;cases.png">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="caseEntree" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Mobile&lt;->CaseSortie" edgeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@additionalLayers[name='Relations']/@edgeMappings[name='Mobile%26CaseSortie']" iconPath="/n7.towerDefense/ressources/icones_sirius/mobile&amp;cases.png">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="caseSortie" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Case&lt;->NatureTerrain" edgeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@additionalLayers[name='Relations']/@edgeMappings[name='Case%26NatureTerrain']" iconPath="/n7.towerDefense/ressources/icones_sirius/case&amp;natureterrain.png">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="natureDeTerrain" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Obstacle&lt;->CaseCampement" edgeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@additionalLayers[name='Relations']/@edgeMappings[name='Obstacle%26CaseCampement']" iconPath="/n7.towerDefense/ressources/icones_sirius/obstacle&amp;case.png">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="caseCampement" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Mobile&lt;->Projectile" edgeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@additionalLayers[name='Relations']/@edgeMappings[name='Mobile%26Projectile']" iconPath="/n7.towerDefense/ressources/icones_sirius/_&amp;projectile.png">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="projectilesLancables" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Obstacle&lt;->Projectile" edgeMappings="//@ownedViewpoints[name='TowdefViewpoint']/@ownedRepresentations[name='PartieDiagram']/@additionalLayers[name='Relations']/@edgeMappings[name='Obstacle%26Projectile']" iconPath="/n7.towerDefense/ressources/icones_sirius/_&amp;projectile.png">
+            <sourceVariable name="source"/>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[source/]">
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="projectilesLancables" valueExpression="[target/]"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
+        </toolSections>
+      </additionalLayers>
+    </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="n7.towerDefense.design.Services"/>
+  </ownedViewpoints>
+</description:Group>

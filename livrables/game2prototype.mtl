@@ -1,0 +1,151 @@
+[comment encoding = UTF-8 /]
+[module toPrototype('http://www.Towdef.n7')]
+
+
+[template public toPrototype(partie : Partie)]
+[comment @main/]
+[file (partie.name + '.java', false, 'UTF-8')]
+import java.util.ArrayList;
+import n7.towerDefense.game.*;
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.SlickException;
+
+public class [partie.name/] {
+	public static void main(String['['/][']'/] args) throws SlickException{
+[for (natureTerrain : NatureTerrain | partie.listeElements)]
+[genererJavaNatureTerrain(natureTerrain)/]
+[/for]
+
+		// Terrain de jeu
+		Case['['/][']'/]['['/][']'/] cases = new Case['['/][partie.terrainDeJeu.nbLignes/][']'/]['['/][partie.terrainDeJeu.nbColonnes/][']'/];
+[for (case : Case | partie.terrainDeJeu.listeCases)]
+[genererJavaCase(case)/]
+[/for]
+		TerrainJeu terrain = new TerrainJeu(cases, [partie.terrainDeJeu.nbLignes/], [partie.terrainDeJeu.nbColonnes/]);
+
+		// Liste des elements
+[for (projectile : Projectile | partie.listeElements)]
+[genererJavaProjectile(projectile)/]
+[/for]
+[for (mobile : Mobile | partie.listeVagues.mobilesVague)]
+[genererJavaMobile(mobile)/]
+[/for]
+[for (obstacle : Obstacle | partie.listeVagues.obstaclesVague)]
+[genererJavaObstacle(obstacle)/]
+[/for]
+
+		ArrayList<Element> listeElements = new ArrayList<Element>();
+[for (projectile : Projectile | partie.listeElements)]
+		listeElements.add([projectile.name/]);
+[/for]
+[for (mobile : Mobile | partie.listeVagues.mobilesVague)]
+		listeElements.add([mobile.name/]);
+[/for]
+[for (obstacle : Obstacle | partie.listeVagues.obstaclesVague)]
+		listeElements.add([obstacle.name/]);
+[/for]
+[for (natureTerrain : NatureTerrain | partie.listeElements)]
+		listeElements.add([natureTerrain.name/]);
+[/for]
+
+		// Liste des vagues
+[for (vague : Vague | partie.listeVagues)]
+[genererJavaVague(vague)/]
+[/for]
+		ArrayList<Vague> listeVagues = new ArrayList<Vague>();
+[for (vague : Vague | partie.listeVagues)]
+		listeVagues.add([vague.name/]);
+[/for]
+
+		// Liste des niveaux
+[for (niveau : Niveau | partie.listeNiveaux)]
+[genererJavaNiveau(niveau)/]
+[/for]
+		ArrayList<Niveau> listeNiveaux = new ArrayList<Niveau>();
+[for (niveau : Niveau | partie.listeNiveaux)]
+		listeNiveaux.add([niveau.name/]);
+[/for]
+
+		// Partie finale
+		Partie [partie.name/] = new Partie(listeElements, listeVagues, terrain, listeNiveaux);
+		AppGameContainer app = new AppGameContainer([partie.name/]);
+		int width;
+		int height;
+		float ratio = terrain.getNbLignes()/terrain.getNbColonnes();
+		if (ratio > 1) {
+			width = app.getScreenWidth();
+			height = (int) (width*ratio);
+			if (height > app.getScreenHeight()) {
+				height = app.getScreenHeight();
+			}
+		} else {
+			height = app.getScreenHeight();
+			width = (int) (height/ratio);
+			if (width > app.getScreenWidth()) {
+				width = app.getScreenWidth();
+			}
+		}
+		app.setDisplayMode(width, height, false);
+		app.start();
+	}
+}
+[/file]
+[/template]
+
+[template private genererJavaNatureTerrain(natureTerrain : NatureTerrain)]
+		NatureTerrain [natureTerrain.name/] = new NatureTerrain("[natureTerrain.name/]", NatureTerrainType.[natureTerrain.type.typeToString()/]);
+[/template]
+
+[template private genererJavaCase(case : Case)]
+		cases['['/][case.noLigne - 1/][']'/]['['/][case.noColonne - 1/][']'/] = new Case("[case.name/]", [case.noLigne - 1/], [case.noColonne - 1/], [case.energie/], [case.volumeMax/], [case.natureDeTerrain.name/]);
+[/template]
+
+[template private genererJavaProjectile(projectile : Projectile)]
+		Projectile [projectile.name/] = new Projectile("[projectile.name/]", [projectile.portee/], [projectile.masse/], [projectile.vitesse/], [projectile.energie/]);
+[/template]
+
+[template private genererJavaMobile(mobile : Mobile)]
+		ArrayList<Projectile> projectilesLancables_[mobile.name/] = new ArrayList<Projectile>();
+		[for (projectile : Projectile | mobile.projectilesLancables)]
+		projectilesLancables_[mobile.name/].add([projectile.name/]);
+		[/for]
+		Mobile [mobile.name/] = new Mobile("[mobile.name/]", [mobile.energieMax/], new Tactique[mobile.tactique.typeToString()/](), projectilesLancables_[mobile.name/], [mobile.volume/], [mobile.positionDansVague/], cases['['/][mobile.caseEntree.noLigne - 1/][']'/]['['/][mobile.caseEntree.noColonne - 1/][']'/], cases['['/][mobile.caseSortie.noLigne - 1/][']'/]['['/][mobile.caseSortie.noColonne - 1/][']'/]);
+[/template]
+
+[template private genererJavaObstacle(obstacle : Obstacle)]
+		ArrayList<Projectile> projectilesLancables_[obstacle.name/] = new ArrayList<Projectile>();
+		[for (projectile : Projectile | obstacle.projectilesLancables)]
+		projectilesLancables_[obstacle.name/].add([projectile.name/]);
+		[/for]
+		Obstacle [obstacle.name/] = new Obstacle("[obstacle.name/]", [obstacle.energieMax/], new Tactique[obstacle.tactique.typeToString()/](), projectilesLancables_[obstacle.name/], cases['['/][obstacle.caseCampement.noLigne - 1/][']'/]['['/][obstacle.caseCampement.noColonne - 1/][']'/]);
+[/template]
+
+[template private genererJavaVague(vague : Vague)]
+		ArrayList<Mobile> mobilesVague = new ArrayList<Mobile>();
+		[for (mobile : Mobile | vague.mobilesVague)]
+		mobilesVague.add([mobile.name/]);
+		[/for]
+		ArrayList<Obstacle> obstaclesVague = new ArrayList<Obstacle>();
+		[for (obstacle : Obstacle | vague.obstaclesVague)]
+		obstaclesVague.add([obstacle.name/]);
+		[/for]
+		Vague [vague.name/] = new Vague([vague.energieAttribueeSiVictoire/], mobilesVague, obstaclesVague);
+[/template]
+
+[template private genererJavaNiveau(niveau : Niveau)]
+		Niveau [niveau.name/] = new Niveau([niveau.dureePauses/], [niveau.energieInitiale/], [niveau.nbMobilesPourPerdre/]);
+[/template]
+
+[query private typeToString(type : NatureTerrainType) : String =
+	(if (type = NatureTerrainType::entree) then 'Entree'
+	else if (type = NatureTerrainType::sortie) then 'Sortie'
+	else if (type = NatureTerrainType::chemin) then 'Chemin'
+	else if (type = NatureTerrainType::campement) then 'Campement'
+	else if (type = NatureTerrainType::decoration) then 'Decoration' else 'void' endif endif endif endif endif)
+/]
+
+[query private typeToString(type : TactiqueType) : String =
+	(if (type = TactiqueType::visePlusProche) then 'PlusProche'
+	else if (type = TactiqueType::visePlusFaible) then 'PlusFaible'
+	else if (type = TactiqueType::visePlusFort) then 'PlusFort' else 'void' endif endif endif)
+/]

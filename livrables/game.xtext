@@ -1,0 +1,130 @@
+grammar n7.Towdef with org.eclipse.xtext.common.Terminals
+
+generate towdef "http://www.Towdef.n7"
+
+///////////////////////////////////////////////////////////////////////////////
+
+Partie :
+	{Partie}
+	'partie'
+	name = ID
+	'{'
+		'listeElements' '(' listeElements += Element (',' listeElements += Element)* ')'
+		'terrainDeJeu' '(' terrainDeJeu = TerrainJeu ')'
+		'listeNiveaux' '(' listeNiveaux += Niveau (',' listeNiveaux += Niveau)* ')'
+		'listeVagues' '(' listeVagues += Vague (',' listeVagues += Vague)* ')'
+	'}'
+;
+
+Element :
+	Element_Impl | Obstacle | Mobile | Projectile | NatureTerrain
+;
+
+Element_Impl returns Element :
+	{Element}
+;
+
+Obstacle :
+	{Obstacle}
+	'obstacle'
+	name = ID
+	'{'
+		'energieMax' '(' energieMax = INT ')'
+		'energieActuelle' '(' energieActuelle = INT ')'
+		'energieTour' '(' energieTour = INT ')'
+		'tactique' '(' tactique = TactiqueType ')'
+		'caseCampement' '(' caseCampement = [Case] ')'
+		'projectilesLancables' '(' projectilesLancables += [Projectile] (',' projectilesLancables += [Projectile])* ')'
+	'}'
+;
+
+Mobile :
+	{Mobile}
+	'mobile'
+	name = ID
+	'{'
+		'volume' '(' volume = INT ')'
+		'energieMax' '(' energieMax = INT ')'
+		'energieActuelle' '(' energieActuelle = INT ')'
+		'energieTour' '(' energieTour = INT ')'
+		'tactique' '(' tactique = TactiqueType ')'
+		'positionDansVague' '(' positionDansVague = INT ')'
+		'caseEntree' '(' caseEntree = [Case] ')'
+		'caseSortie' '(' caseSortie = [Case] ')'
+		'projectilesLancables' '(' projectilesLancables += [Projectile] (',' projectilesLancables += [Projectile])* ')'
+	'}'
+;
+
+Projectile :
+	{Projectile}
+	'projectile'
+	name = ID
+	'{'
+		'portee' '(' portee = INT ')'
+		'masse' '(' masse = INT ')'
+		'vitesse' '(' vitesse = INT ')'
+		'energie' '(' energie = INT ')'
+	'}'
+;
+
+NatureTerrain :
+	{NatureTerrain}
+	'natureTerrain'
+	name = ID
+	'{'
+		'type' '(' type = NatureTerrainType ')'
+	'}'
+;
+
+Vague :
+	{Vague}
+	'vague'
+	name = ID
+	'{'
+		'energieAttribueeSiVictoire' '(' energieAttribueeSiVictoire = INT ')'
+		'mobilesVague' '(' mobilesVague += Mobile (',' mobilesVague += Mobile)* ')'
+		'obstaclesVague' '(' obstaclesVague += Obstacle (',' obstaclesVague += Obstacle)* ')'
+	'}'
+;
+
+TerrainJeu :
+	{TerrainJeu}
+	'terrainJeu'
+	'{'
+		'nbLignes' '(' nbLignes = INT ')'
+		'nbColonnes' '(' nbColonnes = INT ')'
+ 		'listeCases' '(' listeCases += Case (',' listeCases += Case)* ')'
+	'}'
+;
+
+Case :
+	{Case}
+	'case'
+	name = ID
+	'{'
+		'noLigne' '(' noLigne = INT ')'
+		'noColonne' '(' noColonne = INT ')'
+		'energie' '(' energie = INT ')'
+		'volumeMax' '(' volumeMax = INT ')'
+		'natureDeTerrain' '(' natureDeTerrain = [NatureTerrain] ')'
+	'}'
+;
+
+Niveau :
+	{Niveau}
+	'niveau'
+	name = ID
+	'{'
+		'dureePauses' '(' dureePauses = INT ')'
+		'energieInitiale' '(' energieInitiale = INT ')'
+		'nbMobilesPourPerdre' '(' nbMobilesPourPerdre = INT ')'
+	'}'
+;
+
+enum NatureTerrainType :
+	entree = 'entree' | sortie = 'sortie' | chemin = 'chemin' | campement = 'campement' | decoration = 'decoration'
+;
+
+enum TactiqueType :
+	visePlusProche = 'visePlusProche' | visePlusFaible = 'visePlusFaible' | visePlusFort = 'visePlusFort'
+;

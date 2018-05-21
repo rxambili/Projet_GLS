@@ -1,0 +1,96 @@
+partie enigme1 {
+	listeElements (
+		projectile P {
+			portee(1)
+			masse(1)
+			vitesse(1)
+			energie(1)
+		},
+		natureTerrain montagne {
+			type(decoration)
+		},
+		natureTerrain entry {
+			type(entree)
+		},
+		natureTerrain route {
+			type(chemin)
+		},
+		natureTerrain exit {
+			type(sortie)
+		},
+		natureTerrain garage {
+			type(campement)
+		}
+	)
+
+	terrainDeJeu (
+		terrainJeu {
+			nbLignes(3)
+			nbColonnes(3)
+			listeCases (
+				case uu {noLigne(1) noColonne(1) energie(0) volumeMax(0) natureDeTerrain(montagne)},
+				case ud {noLigne(1) noColonne(2) energie(0) volumeMax(0) natureDeTerrain(montagne)},
+				case ut {noLigne(1) noColonne(3) energie(0) volumeMax(0) natureDeTerrain(montagne)},
+				case debut {noLigne(2) noColonne(1) energie(1) volumeMax(1) natureDeTerrain(entry)},
+				case dd {noLigne(2) noColonne(2) energie(1) volumeMax(1) natureDeTerrain(route)},
+				case fin {noLigne(2) noColonne(3) energie(1) volumeMax(1) natureDeTerrain(exit)},
+				case tu {noLigne(3) noColonne(1) energie(0) volumeMax(0) natureDeTerrain(garage)},
+				case gar {noLigne(3) noColonne(2) energie(0) volumeMax(0) natureDeTerrain(garage)},
+				case td {noLigne(3) noColonne(3) energie(0) volumeMax(0) natureDeTerrain(garage)}
+			)
+		}
+	)
+	listeNiveaux (
+		niveau niveau1 {
+			dureePauses(1)
+			energieInitiale(0)
+			nbMobilesPourPerdre(2)
+		}
+	)
+	listeVagues (
+				vague vague1 {
+					energieAttribueeSiVictoire(3)
+					mobilesVague (mobile M1 {
+			volume(1)
+			energieMax(1)
+			energieActuelle(1)
+			energieTour(1)
+			tactique(visePlusProche)
+			positionDansVague(1)
+			caseEntree(debut)
+			caseSortie(fin)
+			projectilesLancables(P)
+		},
+		mobile M2 {
+			volume(1)
+			energieMax(1)
+			energieActuelle(1)
+			energieTour(1)
+			tactique(visePlusProche)
+			positionDansVague(2)
+			caseEntree(debut)
+			caseSortie(fin)
+			projectilesLancables(P)
+		},
+		mobile M3 {
+			volume(1)
+			energieMax(1)
+			energieActuelle(1)
+			energieTour(1)
+			tactique(visePlusProche)
+			positionDansVague(3)
+			caseEntree(debut)
+			caseSortie(fin)
+			projectilesLancables(P)
+		})
+					obstaclesVague(obstacle O {
+			energieMax(1)
+			energieActuelle(1)
+			energieTour(1)
+			tactique(visePlusFaible)
+			caseCampement(gar)
+			projectilesLancables(P)
+		})
+				}
+			)
+}

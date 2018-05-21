@@ -1,0 +1,143 @@
+import 'Towdef.ecore'
+
+package towdef
+
+context Element
+		
+		/* E3
+		 * 	Deux eléments ne peuvent pas avoir le même nom
+		 * 	le champ "nom" n'est pas vide
+		 */
+		inv differentNames: self.Partie
+			->select(p | p.oclIsKindOf(Element))
+			->collect(p | p.oclAsType(Element))
+			->forAll(e1 | e1 = self or e1.name <> self.name)
+			
+		inv nomNonVide : self.name.size() > 0
+
+context Case
+
+/*
+	 * definition de deux cases contigues
+	 */
+
+/*
+	 * definition de deux cases contigues
+	 */
+
+/*
+	 * definition de deux cases contigues
+	 */
+
+	/* 
+	 *  definition de deux cases contigues
+	 */
+	 def: near(cerca : Case) : Boolean
+	 	=((cerca.noColonne=self.noColonne)  and (cerca.noLigne=(self.noLigne + 1) or cerca.noLigne=(self.noLigne - 1 ))) 
+		  or ((cerca.noLigne=self.noLigne)  and (cerca.noColonne=(self.noColonne + 1) or cerca.noColonne=(self.noColonne - 1 )))
+	 def: nearS() : Case
+	 	=self.terrainDeJeu().listeCases->select(c | self.near(c) and (c.natureDeTerrain = NatureTerrainType::sortie))
+	 	->first()
+
+/*
+	 * renvoie un chemin possible
+	 */
+
+/*
+	 * renvoie un chemin possible
+	 */
+
+/*
+	 * renvoie un chemin possible
+	 */
+	 /*
+	  *  renvoie un chemin possible
+	  */
+	  	def: chemin(camino : Set(Case)): Set(Case)
+			=self.terrainDeJeu().listeCases->select(c | (c.natureDeTerrain = NatureTerrainType::chemin) and self.near(c) and camino->excludes(c))
+				->union(
+				self.terrainDeJeu().listeCases->select(c | (c.natureDeTerrain = NatureTerrainType::chemin)  and self.near(c) and camino->excludes(c))
+				->collect(c1:Case | c1.chemin(camino->union(
+				self.terrainDeJeu().listeCases->select(c2 | (c2.natureDeTerrain=NatureTerrainType::chemin) and c1.near(c2) and camino->excludes(c2)  ))				
+				))->asSet()
+			)
+
+/*
+	 * retourne le terrain correspondant à la case
+	 */
+
+/*
+	 * retourne le terrain correspondant à la case
+	 */
+
+/*
+	 * retourne le terrain correspondant à la case
+	 */
+	  
+	
+/* retourne le terrain correspondant à la case */
+	def: terrainDeJeu() : TerrainJeu 
+		 = TerrainJeu.allInstances()
+		 ->select(t | t.listeCases ->includes(self))
+		->asSequence() ->first()
+		
+		/*
+		 *  invariants autour de l'accessibilité de chacun des types de cases ( E12, E13 et E14)
+		 *   Remarque : un projectile à tout type de case; nul besoin donc de le preciser dans 
+		 * 		 les contraintes
+		 */
+		 /* aucun obstacle n'a acces à une case de type chemin, entree ou sortie */
+		 inv accesChemin : Obstacle.allInstances()
+		 	->select(o | (o.caseCampement -> includes(self)) and (self.natureDeTerrain = NatureTerrainType::chemin))
+		 	->size() = 0
+		 	
+		 inv accesEntree : Obstacle.allInstances()
+		 	->select(o | (o.caseCampement -> includes(self)) and (self.natureDeTerrain = NatureTerrainType::entree))
+		 	->size() = 0
+		 	
+		 inv accesSortie : Obstacle.allInstances()
+		 	->select(o | (o.caseCampement -> includes(self)) and (self.natureDeTerrain = NatureTerrainType::sortie))
+		 	->size() = 0
+		 	
+		 /* aucun obstacle n'a acces à une case de type decoration */
+		 	 inv accesCampement : Obstacle.allInstances()
+		 ->select(o | (o.caseCampement -> includes(self)) and (self.natureDeTerrain = NatureTerrainType::decoration))
+		 ->size() = 0
+		 
+				inv CaseInTerrain : self
+		->select(c | c.oclIsKindOf(Case))
+		->forAll(c | (c.noLigne <= c.terrainDeJeu().nbLignes) and (c.noLigne <= c.terrainDeJeu().nbLignes))
+		
+				inv differentsXY: self.TerrainJeu
+		->select(p | p.oclIsKindOf(Case))
+		->collect(p | p.oclAsType(Case))
+		->forAll(c1 | c1 = self or ((c1.noLigne <> self.noLigne)or(c1.noColonne <> self.noColonne)))
+
+		
+context TerrainJeu
+	
+				 		/* E10 */
+		inv auMin1E : self.listeCases
+		->select(c | c.natureDeTerrain.type=NatureTerrainType::entree)->size() > 0
+
+		inv auMin1S : self.listeCases
+		->select(c | c.natureDeTerrain.type=NatureTerrainType::sortie)->size() > 0
+
+		inv auMin1C : self.listeCases
+		->select(c | c.natureDeTerrain.type=NatureTerrainType::chemin)->size() > 0
+		
+		/* 
+		 * toute case d’entrée est réliée à au moins une case de sortie par une séquence de cases de chemin
+contiguës. Deux cases sont contiguës si elles possèdent un côté commun
+		 */
+		 inv cheminSortieEntree : self.listeCases
+		->select(c | c.oclIsKindOf(Case))
+		->select(n | n.oclIsKindOf(NatureTerrain)=NatureTerrainType::entree)
+		->forAll( e | e.chemin(Set{})->exists(e | e.nearS()))
+		
+context Vague
+	inv vagueBienFormee: (self.mobilesVague.energieMax->sum() )
+								> (self.obstaclesVague.projectilesLancables.energie -> flatten()-> sum())
+								
+		
+endpackage
